@@ -1,4 +1,3 @@
-
 package searchengine;
 
 import java.io.File;
