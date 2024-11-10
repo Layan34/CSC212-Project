@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class ReadDoc {
     
+    /*
     public static void LoadFile(String Name){
         String line;
         try{
@@ -24,9 +25,7 @@ public class ReadDoc {
                int ID = Integer.parseInt(sID);
                String data = line.substring(line.indexOf(',')+1).trim();
             }
-            
-            
-            
+
         }
         catch(Exception em){
           System.out.println("File is ended.");
@@ -43,15 +42,12 @@ public class ReadDoc {
             while(read.hasNextLine()){
                line=read.nextLine();
                System.out.println(line);}
-            
 
-               
     
         }catch(Exception em){
           System.out.println("File is ended.");
         
         }
     
-    
-}
+    } */
 }
