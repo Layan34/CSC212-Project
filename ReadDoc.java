@@ -1,20 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package searchengine;
 
 import java.io.File;
 import java.util.Scanner;
 
-/**
- *
- * @author Layan saad
- */
+
 public class ReadDoc {
     
     public static void LoadFile(String Name){
-        String line = null;
+        String line;
         try{
             File f = new File(Name);
             Scanner read = new Scanner(f);
