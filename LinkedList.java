@@ -79,7 +79,7 @@ public class LinkedList<T>{
         Node<T>p=head;
         while(p!=null)
         {
-            System.out.println(p.data+" ");
+            System.out.print(p.data+" ");
             p=p.next;
         }
     }

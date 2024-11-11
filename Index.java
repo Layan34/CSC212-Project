@@ -18,13 +18,13 @@ public class Index {
         }
         documents.findFirst();
         while(!documents.last()){
-            System.out.println("\nID: "+ documents.retrieve().id);
+            System.out.print("\nID: "+ documents.retrieve().id+"\n");
             
             documents.retrieve().words.display();
             documents.findNext();
         }
         
-        System.out.println("\nID: "+ documents.retrieve().id);
+        System.out.print("\nID: "+ documents.retrieve().id+"\n");
          documents.retrieve().words.display();
             
     }
