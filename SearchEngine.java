@@ -1,4 +1,6 @@
+
 package searchengine;
+
 
 import java.io.File;
 import java.util.Scanner;
@@ -8,11 +10,12 @@ public class SearchEngine {
     LinkedList<String> stopwords;
     Index index;
     InvertedIndex invertedIndex;
-
+    InvertedIndexBST invertedIndexBST;
     public SearchEngine () {
         stopwords=new LinkedList<>();
         index=new Index();
         invertedIndex=new InvertedIndex();
+        invertedIndexBST=new InvertedIndexBST();
     }
 
 
@@ -86,6 +89,7 @@ public class SearchEngine {
             if(!isStopWord(w)){
                 wInDoc.insert(w);
                 invertedIndex.addToInverted(w,id);
+                invertedIndexBST.add(w, id);
             }
         }
     }
@@ -106,6 +110,8 @@ public class SearchEngine {
         s.index.displayDocs();
         System.out.println("\n\nInverted Index:");
         s.invertedIndex.displayInvertedIndex();
+        System.out.println("\n\nInverted Index BST:");
+        s.invertedIndexBST.display_invertedIndex();
     }
     
 }
