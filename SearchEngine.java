@@ -132,9 +132,9 @@ public class SearchEngine {
         s.index.displayDocs();
         System.out.println("\n\nInverted Index:");
         s.invertedIndex.displayInvertedIndex();
-        //QueryProcessor query = new QueryProcessor(s.invertedIndex);
-        //LinkedList result = QueryProcessor.AND("colorANDgreen");
-        //s.displayDocsFromIDs(result);
+        QueryProcessor query = new QueryProcessor(s.invertedIndex);
+        LinkedList result = QueryProcessor.AND("colorANDgreen");
+        s.displayDocsFromIDs(result);
         
         
         System.out.println("\n\nInverted Index BST:");
