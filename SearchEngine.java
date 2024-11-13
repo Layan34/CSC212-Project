@@ -11,6 +11,7 @@ public class SearchEngine {
     Index index;
     InvertedIndex invertedIndex;
     InvertedIndexBST invertedIndexBST;
+
     public SearchEngine () {
         stopwords=new LinkedList<>();
         index=new Index();
@@ -65,6 +66,27 @@ public class SearchEngine {
         }
     }
 
+    public void displayDocsFromIDs(LinkedList<Integer> IDs){
+        if(IDs.empty()){
+        System.out.println("Empty.");
+        return;
+        }
+
+        IDs.findFirst();
+        while(!IDs.last()){
+            Document doc=index.getDocFromID(IDs.retrieve());
+            if(doc!=null){
+                System.out.println("Document "+doc.id+":"+doc.words);
+            }
+            System.out.println("");
+        }
+    }
+
+
+
+
+
+
     public boolean isStopWord(String w){
         if(stopwords.empty())
         return false;
@@ -110,6 +132,11 @@ public class SearchEngine {
         s.index.displayDocs();
         System.out.println("\n\nInverted Index:");
         s.invertedIndex.displayInvertedIndex();
+        //QueryProcessor query = new QueryProcessor(s.invertedIndex);
+        //LinkedList result = QueryProcessor.AND("colorANDgreen");
+        //s.displayDocsFromIDs(result);
+        
+        
         System.out.println("\n\nInverted Index BST:");
         s.invertedIndexBST.display_invertedIndex();
     }

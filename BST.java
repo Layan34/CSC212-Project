@@ -58,9 +58,9 @@ public void inOrder(){
 public void inOrder(BSTNode p){
     if(p==null) return;
     inOrder(p.left);
-    System.out.println("key= "+p.key);
-   System.out.println(p.data);
-  //((LinkedList<T>)p.data).display();
+    System.out.println("\nkey= "+p.key);
+   // System.out.println(p.data);
+    ((Word)p.data).displayWordIds();
     inOrder(p.right);
 }
 public void preOrder(){

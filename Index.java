@@ -10,6 +10,30 @@ public class Index {
     public void addDoc(Document doc){
         documents.insert(doc);
     }
+
+    public Document getDocFromID (int ID){
+
+        if(documents.empty()){
+            System.out.println("Empty.");
+            return null;
+        }
+
+        documents.findFirst();
+        while(!documents.last()){
+            if(documents.retrieve().id==ID)
+            return documents.retrieve();
+
+            documents.findNext();
+
+            if(documents.retrieve().id==ID)
+            return documents.retrieve();
+
+        }
+        return null;
+    }
+
+
+
     
     public void displayDocs(){
         if(documents.empty()){
