@@ -55,7 +55,7 @@ public class QueryProcessor {
         pt1.findFirst();
         
         while(true){
-            boolean wordFound=isInResult(result,pt1.retrieve());
+            boolean wordFound=isInResult(result,p1.retrieve());
             if(!wordFound){
                 pt2.findFirst();
                 while(true){
@@ -64,7 +64,7 @@ public class QueryProcessor {
                         break;
                     }
                     if(!pt2.last())
-                    pt2.findNext();
+                    p2.findNext();
 
                     else
                     break;
@@ -137,6 +137,7 @@ public class QueryProcessor {
         }
 
         return result;
+        
 
         }
     }
