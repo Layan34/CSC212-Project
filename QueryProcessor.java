@@ -1,3 +1,4 @@
+
 package searchengine;
 public class QueryProcessor {
     static InvertedIndex invertedInd;
@@ -5,7 +6,7 @@ public class QueryProcessor {
     public QueryProcessor(InvertedIndex inv){
         invertedInd=inv;
     }
-
+   
     public static boolean isInResult(LinkedList<Integer>result,Integer id){
         if(result.empty())
         return false;
@@ -140,7 +141,19 @@ public class QueryProcessor {
         
 
         }
+     public static LinkedList<Integer>MixedQuery(String query){
+        LinkedList<Integer> q1 = new LinkedList<Integer>();
+        LinkedList<Integer> q2 = new LinkedList<Integer>();
+        if(query.length()==0)
+            return q1;
+        String ORs[]= query.split("OR");
+        q1= AND(ORs[0]);
+        for(int i=1;i<ORs.length;i++)
+        {
+            q2=AND(ORs[i]);
+            q1=OR(q1,q2);
+        }
+        
+        return q1;
     }
-
-
-
+    }
