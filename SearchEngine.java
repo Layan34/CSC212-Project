@@ -129,16 +129,16 @@ public class SearchEngine {
         SearchEngine s = new SearchEngine();
         s.LoadFile("dataset.csv");
         s.LoadStop("stop.txt");
-        s.index.displayDocs();
-        System.out.println("\n\nInverted Index:");
-        s.invertedIndex.displayInvertedIndex();
+        //s.index.displayDocs();
+        //System.out.println("\n\nInverted Index:");
+        //s.invertedIndex.displayInvertedIndex();
         QueryProcessor query = new QueryProcessor(s.invertedIndex);
         LinkedList result = QueryProcessor.AND("colorANDgreen");
         s.displayDocsFromIDs(result);
         
         
-        System.out.println("\n\nInverted Index BST:");
-        s.invertedIndexBST.display_invertedIndex();
+        //System.out.println("\n\nInverted Index BST:");
+        //s.invertedIndexBST.display_invertedIndex();
     }
     
 }

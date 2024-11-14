@@ -55,7 +55,7 @@ public class QueryProcessor {
         pt1.findFirst();
         
         while(true){
-            boolean wordFound=isInResult(result,p1.retrieve());
+            boolean wordFound=isInResult(result,pt1.retrieve());
             if(!wordFound){
                 pt2.findFirst();
                 while(true){
@@ -64,7 +64,7 @@ public class QueryProcessor {
                         break;
                     }
                     if(!pt2.last())
-                    p2.findNext();
+                    pt2.findNext();
 
                     else
                     break;
@@ -111,7 +111,7 @@ public class QueryProcessor {
 
         pt1.findFirst();
         while(!pt1.empty()){
-            boolean wordFound=isInResult(result,p1.retrieve());
+            boolean wordFound=isInResult(result,pt1.retrieve());
             if(!wordFound)
             result.insert(pt1.retrieve());
 
@@ -123,8 +123,8 @@ public class QueryProcessor {
 
         pt2.findFirst();
 
-        while(!p2.empty()){
-            boolean wordFound=isInResult(result,p2.retrieve());
+        while(!pt2.empty()){
+            boolean wordFound=isInResult(result,pt2.retrieve());
             if(!wordFound)
             result.insert(pt2.retrieve());
 
@@ -135,7 +135,8 @@ public class QueryProcessor {
 
 
         }
-        
+
+        return result;
 
         }
     }
