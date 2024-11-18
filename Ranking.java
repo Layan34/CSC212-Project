@@ -66,7 +66,7 @@ public class Ranking {
          LinkedList<Integer> l= new LinkedList<Integer>();
          if(query.length()==0)
              return;
-         String T[] = query.split(" ");
+         String T[] = query.split("\\s+");
          boolean found = false;
          for(int i=0; i<T.length;i++)
          {
@@ -152,6 +152,8 @@ public class Ranking {
            Document document = getDocByID(allDocInQuery.retrieve());
            int r =getDocRankScore(document,query);
            insertSorted(new DocRaking(allDocInQuery.retrieve(),r));
+                  allDocInQuery.findNext();
+
        }
         Document document = getDocByID(allDocInQuery.retrieve());
         int r =getDocRankScore(document,query);

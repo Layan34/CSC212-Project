@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package searchengine;
 public class InvertedIndexBST {
     BST<Word>invertedIndex;
@@ -14,13 +11,13 @@ public class InvertedIndexBST {
         inverted.invertedIndex.findFirst();
         while(!inverted.invertedIndex.last()){
             invertedIndex.insert(inverted.invertedIndex.retrieve().word,inverted.invertedIndex.retrieve());
-            inverted.invertedIndex.findFirst();    
+            inverted.invertedIndex.findNext();    
         }
         invertedIndex.insert(inverted.invertedIndex.retrieve().word,inverted.invertedIndex.retrieve());
             
     }
     public void add( String word,int id ){
-        if (!invertedIndex.findKey(word)){
+        if (!search_word_in_inverted(word)){
             Word w= new Word(word);
             w.documentIDs.insert(id);
             invertedIndex.insert(word, w);
