@@ -1,5 +1,4 @@
 package searchengine;
-
 public class QueryProcessor {
     static InvertedIndex invertedInd;
 
@@ -14,19 +13,20 @@ public class QueryProcessor {
 
         result.findFirst();
 
-        while (true) {
+        while (!result.last()) {
             if (result.retrieve().equals(id)) {
                 return true;
             }
-            if (result.last()) {
-                break;
-            }
             result.findNext();
+        }
+        if (result.retrieve().equals(id)) {
+            return true;
         }
         return false;
     }
 
     public static LinkedList<Integer> AND(String query) {
+        //System.out.println("Starting AND");
         LinkedList<Integer> pt1 = new LinkedList<>();
         LinkedList<Integer> pt2 = new LinkedList<>();
         String wordsBtw[] = query.split("AND"); // words separated by "AND"
@@ -44,9 +44,11 @@ public class QueryProcessor {
             wordFound = invertedInd.isInInverted(wordsBtw[i].trim().toLowerCase());
             if (wordFound) {
                 pt2 = invertedInd.invertedIndex.retrieve().documentIDs;
+                pt1 = AND(pt1, pt2);
             }
-            pt1 = AND(pt1, pt2);
+
         }
+        //System.out.println("End AND");
 
         return pt1;
     }
@@ -67,18 +69,18 @@ public class QueryProcessor {
                         result.insert(pt1.retrieve());
                         break;
                     }
-                    if (pt2.last()) {
+                    if(!pt2.last() )
+                        pt2.findNext() ;
+                    else
                         break;
-                    }
-                    pt2.findNext();
                 }
-            }
-            if (pt1.last()) {
-                break;
-            }
-            pt1.findNext();
-        }
 
+            }//end if not found
+            if(!pt1.last())
+                pt1.findNext() ;
+            else
+                break;
+        }
         return result;
     }
 
@@ -98,9 +100,9 @@ public class QueryProcessor {
 
         for (int i = 1; i < wordsBtw.length; i++) {
             wordFound = invertedInd.isInInverted(wordsBtw[i].trim().toLowerCase());
-            if (wordFound) {
+            if (wordFound)
                 pt2 = invertedInd.invertedIndex.retrieve().documentIDs;
-            }
+
             pt1 = OR(pt1, pt2);
         }
 
@@ -109,36 +111,32 @@ public class QueryProcessor {
 
     public static LinkedList<Integer> OR(LinkedList<Integer> pt1, LinkedList<Integer> pt2) {
         LinkedList<Integer> result = new LinkedList<>();
-        if ((pt1 == null || pt1.empty()) && (pt2 == null || pt2.empty())) {
+        if (pt1.empty () && pt2.empty ())
             return result;
+        pt1.findFirst () ;
+        while (!pt1.empty ()) {
+            boolean found=isInResult(result,pt1.retrieve ()) ;
+            if (!found) { // not found in result
+                result.insert (pt1.retrieve ()) ;
+            }//end if
+            if (!pt1.last ())
+                pt1.findNext () ;
+            else
+                break;
         }
 
-        if (pt1 != null) {
-            pt1.findFirst();
-            while (true) {
-                if (!isInResult(result, pt1.retrieve())) {
-                    result.insert(pt1.retrieve());
-                }
-                if (pt1.last()) {
-                    break;
-                }
-                pt1.findNext();
-            }
-        }
+        pt2.findFirst () ;
+        while (!pt2.empty() ) {
+            boolean found= isInResult(result, pt2.retrieve ()) ;
+            if(!found){ // not found in result
+                result.insert(pt2.retrieve ()) ;
+            } //end if
+            if(!pt2.last ())
+                pt2.findNext () ;
+            else
+                break;
 
-        if (pt2 != null) {
-            pt2.findFirst();
-            while (true) {
-                if (!isInResult(result, pt2.retrieve())) {
-                    result.insert(pt2.retrieve());
-                }
-                if (pt2.last()) {
-                    break;
-                }
-                pt2.findNext();
-            }
-        }
-
+        }//end inner while for B
         return result;
     }
 
@@ -161,3 +159,6 @@ public class QueryProcessor {
         return q1;
     }
 }
+
+
+

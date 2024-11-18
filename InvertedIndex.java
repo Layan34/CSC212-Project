@@ -9,7 +9,7 @@ public class InvertedIndex {
     }
     
     public boolean isInInverted (String word){
-        if(invertedIndex.empty())
+        if(invertedIndex==null||invertedIndex.empty())
             return false;
         invertedIndex.findFirst();
         while(!invertedIndex.last()){

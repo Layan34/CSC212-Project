@@ -20,6 +20,7 @@ public class Ranking {
             System.out.println("Empty.");
             return;
         }
+        System.out.println("\nRanking of term : "+query) ;
        System.out.printf("%-8s%-8s\n","DocID","Score");
        
        allDocRanked.findFirst();
@@ -38,7 +39,7 @@ public class Ranking {
     
     public static int termFreqInDoc(Document d,String term){
         int freq =0;
-        LinkedList<String>words=d.words;
+        LinkedList<String>words=d.words; //words in this doc (to see term freq in it then rank each doc)
         if(words.empty())
             return 0;
         words.findFirst();
@@ -77,6 +78,7 @@ public class Ranking {
          }
          
      }
+
     public static void AddInList(LinkedList<Integer> l){
          if(l.empty())
              return;
@@ -84,12 +86,11 @@ public class Ranking {
          while(!l.empty()){
              boolean found= Inruslt(allDocInQuery,l.retrieve());
          if(!found)
-             insertIDs(l.retrieve());
+             allDocInQuery.insert(l.retrieve());
          if(!l.last())
              l.findNext();
          else
              break;
-             
      }
     }
     
@@ -108,43 +109,11 @@ public class Ranking {
 
         return false;
     }
-    
-    public static void insertIDs( Integer id){
-        if(allDocInQuery.empty()){
-            allDocInQuery.insert(id);
-            return;          
-        }
-       allDocInQuery.findFirst();
-       while(!allDocInQuery.last())
-       {
-           if(id<allDocInQuery.retrieve()){
-               Integer id1 = allDocInQuery.retrieve();
-               allDocInQuery.update(id);
-               allDocInQuery.insert(id1);
-               return;
-               
-           }
-           
-          else
-               allDocInQuery.findNext();
-       }
-        if(id<allDocInQuery.retrieve()){
-               Integer id1 = allDocInQuery.retrieve();
-               allDocInQuery.update(id);
-               allDocInQuery.insert(id1);
-               return;
-               
-           }
-           
-          else
-               allDocInQuery.findNext();
-       
-    }
-    
-    public static void insertStoredList(){
+
+    public static void insertStoredList(){ //fills list according to query
        RanQuery(query);
        if(allDocInQuery.empty()){
-           System.out.println("Empty.");
+           System.out.println("The query is empty.");
            return;
         }
        allDocInQuery.findFirst();
@@ -161,31 +130,66 @@ public class Ranking {
     }
     
     public static void insertSorted(DocRaking documentRank){
-        if(allDocRanked.empty())
-        {
+        if (allDocRanked.empty()) {
+            // إذا كانت القائمة فارغة، يتم إدخال العنصر مباشرة
             allDocRanked.insert(documentRank);
             return;
         }
+
         allDocRanked.findFirst();
-        while(!allDocRanked.last()){
-            if(documentRank.rank>allDocRanked.retrieve().rank){
-               DocRaking docR=allDocRanked.retrieve();
-               allDocRanked.update(documentRank);
-               allDocRanked.insert(docR);
-               return;
+        while (!allDocRanked.last()) {
+            // مقارنة ترتيب العنصر الحالي مع العناصر الموجودة
+            if (documentRank.rank > allDocRanked.retrieve().rank) {
+                DocRaking docR = allDocRanked.retrieve();
+                allDocRanked.update(documentRank); // احط الاعلى بالبدايه
+                allDocRanked.insert(docR); // إدخال العنصر السابق بعد العنصر الجديد
+                return;
+            }
+
+            else
+            if(documentRank.rank==allDocRanked.retrieve().rank)
+            {
+                while(!allDocRanked.last() && documentRank.rank==allDocRanked.retrieve().rank && documentRank.id>allDocRanked.retrieve().id)
+                    allDocRanked.findNext(); // الانتقال إلى العنصر التالي
+
+
+                if(!allDocRanked.last() || documentRank.id<allDocRanked.retrieve().id) {
+
+                    DocRaking docR = allDocRanked.retrieve();
+                    allDocRanked.update(documentRank); // احط الاعلى بالبدايه
+                    allDocRanked.insert(docR);
+                    return;
+                }
+
+
+                else {
+                    allDocRanked.insert(documentRank);
+                    return;
+
+                }
             }
             else
-               allDocRanked.findNext();
+                allDocRanked.findNext();
+
         }
-        if(documentRank.rank>allDocRanked.retrieve().rank){
-               DocRaking docR=allDocRanked.retrieve();
-               allDocRanked.update(documentRank);
-               allDocRanked.insert(docR);
-               return;
-        
-         }
-        else
+
+        // check last doc if loop not entered
+        if (documentRank.rank > allDocRanked.retrieve().rank) {
+            DocRaking docR = allDocRanked.retrieve();
+            allDocRanked.update(documentRank); // استبدال العنصر الأخير بـ dr
+            allDocRanked.insert(docR); // إدخال العنصر السابق بعد الجديد
+            return;
+        }
+        else {
             allDocRanked.insert(documentRank);
+        }
+
+
+
+
+
+
+}
     
 }
-}
+

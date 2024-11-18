@@ -31,7 +31,7 @@ public class Word{
     
     public void displayWordIds(){
   
-        System.out.print("\nword: "+word);
+        System.out.println("\nword: "+word);
         System.out.print("[");
         documentIDs.display();
         System.out.print("]");

@@ -1,7 +1,6 @@
 
 package searchengine;
 
-
 import java.io.File;
 import java.util.Scanner;
 
@@ -58,7 +57,7 @@ public class SearchEngine {
                 int ID = Integer.parseInt(sID);
                 String data = line.substring(line.indexOf(',')+1).trim();
                 LinkedList <String> wordsInDoc= createInvIndList(data, ID); //Inverted index (words and IDs of docs it appeared in)
-                index.addDoc(new Document(ID, wordsInDoc)); //linked list of docs (with data & IDs)
+                index.addDoc(new Document(ID, wordsInDoc,data)); //linked list of docs (with data & IDs)
             }
         }
         catch(Exception em){
@@ -76,10 +75,16 @@ public class SearchEngine {
         while(!IDs.last()){
             Document doc=index.getDocFromID(IDs.retrieve());
             if(doc!=null){
-                System.out.println("Document "+doc.id+":"+doc.words);
+                System.out.println("Document "+doc.id+":"+doc.word);
             }
-            System.out.println("");
+            IDs.findNext();
         }
+        Document doc=index.getDocFromID(IDs.retrieve());
+        if(doc!=null)
+            System.out.println("Document " + doc.id + ":" + doc.word);
+        System.out.println("");
+        //System.out.println("in displayDocsFromIDs");
+
     }
 
 
@@ -127,18 +132,30 @@ public class SearchEngine {
    
     public static void main(String[] args) {
         SearchEngine s = new SearchEngine();
-        s.LoadFile("dataset.csv");
         s.LoadStop("stop.txt");
-        //s.index.displayDocs();
-        //System.out.println("\n\nInverted Index:");
-        //s.invertedIndex.displayInvertedIndex();
+        s.LoadFile("dataset.csv");
+        System.out.println("\nIndex:");
+        s.index.displayDocs();
+        System.out.println("\nInverted Index:");
+        s.invertedIndex.displayInvertedIndex();
+        InvertedIndexBST indexBST=new InvertedIndexBST();
+        indexBST.add_from_inverted_list(s.invertedIndex);
+
+        Ranking R = new Ranking(indexBST,s.index,"a");
+        R.insertStoredList();
+        R.displayAllDocWithScore();
+        QueryProcessorBST qBST=new QueryProcessorBST(s.invertedIndexBST);
+        LinkedList<Integer> resBST=qBST.OR("surprising OR football");
         QueryProcessor query = new QueryProcessor(s.invertedIndex);
-        LinkedList result = QueryProcessor.AND("colorANDgreen");
-        s.displayDocsFromIDs(result);
+        LinkedList<Integer> resAND = query.AND("championship AND squad");
+        LinkedList<Integer> resOR = QueryProcessor.OR("market OR global");
+        System.out.println("\nResults of query: championship AND squad");
+        s.displayDocsFromIDs(resAND);
+        System.out.println("\nResults of query: surprising OR football");
+        s.displayDocsFromIDs(resBST);
         
-        
-        //System.out.println("\n\nInverted Index BST:");
-        //s.invertedIndexBST.display_invertedIndex();
+        System.out.println("\n\nInverted Index by BST:");
+        s.invertedIndexBST.display_invertedIndex();
     }
     
 }
