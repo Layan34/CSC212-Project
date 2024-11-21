@@ -20,12 +20,11 @@ public class SearchEngine {
     }
 
 
-    public void LoadStop(String Name){
+     public void LoadStop(String Name){
         String line;
         try{
             File f = new File(Name);
             Scanner read = new Scanner(f);
-            read.nextLine(); //to skip first line
             while(read.hasNextLine()){
                 line=read.nextLine();
                 stopwords.insert(line);
@@ -145,7 +144,7 @@ public class SearchEngine {
         return wordsInDoc;
     }
 public static void displayMenu(){
-    System.out.println("retrieve a term (there are choices"
+    System.out.println("1-retrieve a term (there are choices"
     +":using index with lists"
     +":-inverted index with lists"
     +"-inverted index with BST.");

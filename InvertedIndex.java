@@ -1,3 +1,4 @@
+
 package searchengine;
 
 public class InvertedIndex {
@@ -13,14 +14,15 @@ public class InvertedIndex {
             return false;
         invertedIndex.findFirst();
         while(!invertedIndex.last()){
-            if(invertedIndex.retrieve().word.equals(word))
+            if(invertedIndex.retrieve().word.equals(word)){
                 return true;
+            }
             invertedIndex.findNext();
             
         }
-        if(invertedIndex.retrieve().word.equals(word))
+        if(invertedIndex.retrieve().equals(word)){
                 return true;
-        
+           }
         return false;
     }
     
@@ -33,7 +35,7 @@ public class InvertedIndex {
         }
         else{
             Word w2 = invertedIndex.retrieve();
-            w2.documentIDs.insert(id);
+             w2.addID(id);
         }
     }
     
