@@ -1,17 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package csc212.project1;
 
-/**
- *
- * @author mmrrj
- */
+package searchengine;
+
 public class LinkedList<T>{
     private Node<T> head;
     private Node<T> current;
-    int n=0;
+    int s=0;
+    
     public LinkedList(){
         head=current=null;
     }
@@ -42,7 +36,7 @@ public class LinkedList<T>{
     }
     
     public void insert (T val){
-        n++;
+        s++;
         Node<T> tmp;
         if(empty()){
             current=head=new Node<T> (val);
@@ -55,6 +49,16 @@ public class LinkedList<T>{
         }
     }
     
+    public boolean exist(T x){
+        Node<T>p =head;
+        while(p!=null){
+           if(p.data.equals(x))
+               return true;
+           
+           p=p.next;
+        }
+        return false;
+    }
     public void remove(){
         if(current==head){
             head=head.next;
@@ -92,14 +96,8 @@ public class LinkedList<T>{
             p=p.next;
         }
     }
-    public boolean exist(T x){
-        Node<T>p=head;
-        while(p!=null){
-            if(p.data.equals(x))
-                return true;
-            p=p.next;
-        }
-        return false;
-    }
+    
+    
     
 }
+

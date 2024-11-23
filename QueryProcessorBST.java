@@ -6,7 +6,8 @@ public class QueryProcessorBST {
     public QueryProcessorBST(InvertedIndexBST inv) {
         invertedInd = inv;
     }
-
+    
+    // Helper method to check if a given document ID is in the result list.
     public static boolean isInResult(LinkedList<Integer> result, Integer id) {
         if (result.empty()) {
             return false;
@@ -27,7 +28,8 @@ public class QueryProcessorBST {
 
         return false;
     }
-
+    
+   // Processes queries with "AND" logic and returns the intersection of results.
     public static LinkedList<Integer> AND(String query) {
         LinkedList<Integer> pt1 = new LinkedList<Integer>();
         LinkedList<Integer> pt2 = new LinkedList<Integer>();
@@ -50,6 +52,8 @@ public class QueryProcessorBST {
 
         return pt1;
     }
+
+        // Overloaded AND method to find the intersection of two lists of document IDs.
 
     public static LinkedList<Integer> AND(LinkedList<Integer> pt1, LinkedList<Integer> pt2) {
         LinkedList<Integer> result = new LinkedList<Integer>();
@@ -84,7 +88,8 @@ public class QueryProcessorBST {
         }
         return result;
     }
-
+    
+     // Processes queries with "OR" logic and returns the union of results.
     public static LinkedList<Integer> OR(String query) {
         //System.out.println("in OR BST");
         LinkedList<Integer> pt1 = new LinkedList<Integer>();
@@ -110,6 +115,8 @@ public class QueryProcessorBST {
 
         return pt1;
     }
+
+          // Overloaded OR method to find the union of two lists of document IDs.
 
     public static LinkedList<Integer> OR(LinkedList<Integer> pt1, LinkedList<Integer> pt2) {
         LinkedList<Integer> result = new LinkedList<Integer>();
@@ -150,6 +157,7 @@ public class QueryProcessorBST {
         return result;
     }
 
+        // Processes mixed queries with both "AND" and "OR".
     public static LinkedList<Integer> MixedQuery(String query) {
         LinkedList<Integer> q1 = new LinkedList<>();
         LinkedList<Integer> q2 = new LinkedList<>();
@@ -168,4 +176,16 @@ public class QueryProcessorBST {
 
         return q1;
     }
+    
+        // Determines the type of query and processes it accordingly.
+    public static LinkedList<Integer>BooleanQuery(String Query){
+    if(!Query.contains("AND")&&!Query.contains("OR"))
+        return AND(Query);
+    else if(Query.contains("AND")&&!Query.contains("OR"))
+        return AND(Query);
+    else if(!Query.contains("AND")&&Query.contains("OR"))
+            return OR(Query);
+    else
+        return MixedQuery(Query);
+}
 }

@@ -1,4 +1,5 @@
 
+
 package searchengine;
 public class BST <T>{
     private BSTNode<T> root,current;
@@ -58,7 +59,7 @@ public void inOrder(){
 public void inOrder(BSTNode p){
     if(p==null) return;
     inOrder(p.left);
-    System.out.println("\n\nkey= "+p.key);
+//    System.out.println("\n\nkey= "+p.key);
     ((Word)p.data).displayWordIds();
     inOrder(p.right);
 }

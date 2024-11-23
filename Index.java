@@ -7,15 +7,18 @@ public class Index {
        documents = new LinkedList<Document>();
     }
     
+     // Adds a document to the index.
     public void addDoc(Document doc){
         documents.insert(doc);
     }
         
+        // Retrieves all document IDs containing a specific term.
+
     public LinkedList<Integer> get_all_documents_given_term(String term){
         LinkedList<Integer>res=new LinkedList<>();
         if(documents.empty()){
             System.out.println("no documents exist");
-            return res;
+            return null;
         }
         documents.findFirst();
         while(!documents.last()){
@@ -28,6 +31,8 @@ public class Index {
         return res;
     }
     
+        // Retrieves a document based on its ID.
+
     public Document getDocFromID (int ID){
 
         if(documents.empty()){
@@ -51,7 +56,8 @@ public class Index {
 
 
 
-    
+        // Displays all documents and their content.
+
     public void displayDocs(){
         if(documents.empty()){
             System.out.println("There are no available documents.");

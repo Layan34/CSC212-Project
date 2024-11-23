@@ -1,3 +1,4 @@
+
 package searchengine;
 
 public class Node<T>{

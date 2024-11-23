@@ -15,6 +15,8 @@ public class Ranking {
         allDocRanked= new  LinkedList<DocRaking>();
     }
      
+        // Method to display the ranking of documents with their scores.
+
     public static void displayAllDocWithScore(){
         if(allDocRanked.empty()){
             System.out.println("Empty.");
@@ -33,10 +35,12 @@ public class Ranking {
         
     }
     
+        // Method to retrieve a document by its ID from the main index.
     public static Document getDocByID(int id){
         return in.getDocFromID(id);
     }
     
+        // Method to calculate the term frequency of a word in a specific document.
     public static int termFreqInDoc(Document d,String term){
         int freq =0;
         LinkedList<String>words=d.words; //words in this doc (to see term freq in it then rank each doc)
@@ -54,6 +58,7 @@ public class Ranking {
         return freq;
     }
     
+        // Method to calculate the rank score of a document based on the query terms.
     public static int getDocRankScore(Document d,String query){
         if(query.length()==0)
             return 0;
@@ -63,6 +68,8 @@ public class Ranking {
             sum+=termFreqInDoc(d,T[i].trim().toLowerCase());
         return sum;
     }
+    
+        // Method to process the query and find the documents that contain the query terms.
      public static void RanQuery(String query){
          LinkedList<Integer> l= new LinkedList<Integer>();
          if(query.length()==0)
@@ -78,6 +85,8 @@ public class Ranking {
          }
          
      }
+     
+    // Method to add document IDs from a list to the list of documents in the query, ensuring no duplicates.
 
     public static void AddInList(LinkedList<Integer> l){
          if(l.empty())
@@ -94,6 +103,7 @@ public class Ranking {
      }
     }
     
+        // Method to check if a document ID is already in the results list.
     public static boolean Inruslt(LinkedList<Integer>rus,Integer id){
         if(rus.empty())
             return false;
@@ -110,7 +120,8 @@ public class Ranking {
         return false;
     }
 
-    public static void insertStoredList(){ //fills list according to query
+        // Method to fill the list of documents with scores based on the query.
+    public static void insertStoredList(){ 
        RanQuery(query);
        if(allDocInQuery.empty()){
            System.out.println("The query is empty.");
@@ -129,20 +140,23 @@ public class Ranking {
         insertSorted(new DocRaking(allDocInQuery.retrieve(),r));
     }
     
+    
+        // Method to insert a ranked document into the list of ranked documents, maintaining the order of scores.
+
     public static void insertSorted(DocRaking documentRank){
         if (allDocRanked.empty()) {
-            // إذا كانت القائمة فارغة، يتم إدخال العنصر مباشرة
+            
             allDocRanked.insert(documentRank);
             return;
         }
 
         allDocRanked.findFirst();
         while (!allDocRanked.last()) {
-            // مقارنة ترتيب العنصر الحالي مع العناصر الموجودة
+            
             if (documentRank.rank > allDocRanked.retrieve().rank) {
                 DocRaking docR = allDocRanked.retrieve();
-                allDocRanked.update(documentRank); // احط الاعلى بالبدايه
-                allDocRanked.insert(docR); // إدخال العنصر السابق بعد العنصر الجديد
+                allDocRanked.update(documentRank); 
+                allDocRanked.insert(docR); 
                 return;
             }
 
@@ -150,13 +164,13 @@ public class Ranking {
             if(documentRank.rank==allDocRanked.retrieve().rank)
             {
                 while(!allDocRanked.last() && documentRank.rank==allDocRanked.retrieve().rank && documentRank.id>allDocRanked.retrieve().id)
-                    allDocRanked.findNext(); // الانتقال إلى العنصر التالي
+                    allDocRanked.findNext(); 
 
 
                 if(!allDocRanked.last() || documentRank.id<allDocRanked.retrieve().id) {
 
                     DocRaking docR = allDocRanked.retrieve();
-                    allDocRanked.update(documentRank); // احط الاعلى بالبدايه
+                    allDocRanked.update(documentRank); 
                     allDocRanked.insert(docR);
                     return;
                 }
@@ -176,8 +190,8 @@ public class Ranking {
         // check last doc if loop not entered
         if (documentRank.rank > allDocRanked.retrieve().rank) {
             DocRaking docR = allDocRanked.retrieve();
-            allDocRanked.update(documentRank); // استبدال العنصر الأخير بـ dr
-            allDocRanked.insert(docR); // إدخال العنصر السابق بعد الجديد
+            allDocRanked.update(documentRank); 
+            allDocRanked.insert(docR); 
             return;
         }
         else {
@@ -192,4 +206,3 @@ public class Ranking {
 }
     
 }
-

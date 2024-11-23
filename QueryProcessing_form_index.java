@@ -1,22 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package csc212.project1;
 
-import csc212.project1.Index;
-import csc212.project1.LinkedList;
-
-
-/**
- *
- * @author mmrrj
- */
+package searchengine;
 public class QueryProcessing_form_index {
+    
     static Index index1;
     public QueryProcessing_form_index(Index index1){
         this.index1=index1;
     }
+    
+    // Determines the type of query and processes it accordingly.
     public static LinkedList<Integer>BooleanQuery(String Query){
         if(!Query.contains("AND")&&!Query.contains("OR"))
                 return ANDQuery(Query);
@@ -28,6 +19,8 @@ public class QueryProcessing_form_index {
             return MixedQuery(Query);
         
     }
+    
+    // Processes mixed queries with both "AND" and "OR".
     public static LinkedList<Integer> MixedQuery(String query) {
         LinkedList<Integer> q1 = new LinkedList<>();
         LinkedList<Integer> q2 = new LinkedList<>();
@@ -46,6 +39,9 @@ public class QueryProcessing_form_index {
 
         return q1;
     }
+        
+
+   // Processes queries with "AND" logic and returns the intersection of results.
     public static LinkedList<Integer> ANDQuery(String query) {
         //System.out.println("Starting AND");
         LinkedList<Integer> pt1 = new LinkedList<>();
@@ -67,6 +63,8 @@ public class QueryProcessing_form_index {
             return pt1;
       
     }
+    
+    // Overloaded AND method to find the intersection of two lists of document IDs.
     public static LinkedList<Integer> ANDQuery(LinkedList<Integer> pt1, LinkedList<Integer> pt2) {
         LinkedList<Integer> result = new LinkedList<>();
         if ( pt1.empty() || pt2.empty()) {
@@ -97,6 +95,8 @@ public class QueryProcessing_form_index {
         }
         return result;
     }
+    
+     // Processes queries with "OR" logic and returns the union of results.
      public static LinkedList<Integer> ORQuery(String query) {
         LinkedList<Integer> pt1 = new LinkedList<>();
         LinkedList<Integer> pt2 = new LinkedList<>();
@@ -117,7 +117,9 @@ public class QueryProcessing_form_index {
 
         return pt1;
     }
- public static LinkedList<Integer> ORQuery(LinkedList<Integer> pt1, LinkedList<Integer> pt2) {
+     
+      // Overloaded OR method to find the union of two lists of document IDs.
+     public static LinkedList<Integer> ORQuery(LinkedList<Integer> pt1, LinkedList<Integer> pt2) {
         LinkedList<Integer> result = new LinkedList<>();
         if (pt1.empty () && pt2.empty ())
             return result;
@@ -147,25 +149,9 @@ public class QueryProcessing_form_index {
         }//end inner while for B
         return result;
     }
-public static  LinkedList<Integer> notQuery(String query,Index ind1){
-     LinkedList<Integer> pt1 = new LinkedList<>();
-        LinkedList<Integer> pt2 = new LinkedList<>();
-        if(query.length()==0)return pt1;
-        if (!query.contains("NOT"))return pt1;
-        String term=query.replaceFirst("NOT", "").trim().toLowerCase();
-        pt1=index1.get_all_documents_given_term(term.trim().toLowerCase());
-        if(ind1.documents.empty()) return pt1;
-        ind1.documents.findFirst();
-        while(!ind1.documents.last()){
-            if(!pt1.exist(ind1.documents.retrieve().id))
-                pt2.insert(ind1.documents.retrieve().id);
-        ind1.documents.findNext();
-}
-   if(!pt1.exist(ind1.documents.retrieve().id))  
-       pt2.insert(ind1.documents.retrieve().id);
-   return pt2;
-}
-public static boolean isInResult(LinkedList<Integer> result, Integer id) {
+ 
+    // Helper method to check if a given document ID is in the result list.
+    public static boolean isInResult(LinkedList<Integer> result, Integer id) {
         if ( result.empty()) {
             return false;
         }
@@ -185,3 +171,5 @@ public static boolean isInResult(LinkedList<Integer> result, Integer id) {
     }
 
 }
+
+

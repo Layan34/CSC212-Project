@@ -1,6 +1,4 @@
-
-package csc212.project1;
-
+package searchengine;
 
 public class Word{
     String word ;
@@ -15,11 +13,12 @@ public class Word{
     public boolean isInDoc(Integer id){
         if(documentIDs.empty())
             return false;
+        
         documentIDs.findFirst();
         while(!documentIDs.last()){
-            if(documentIDs.retrieve().equals(id)){
+            if(documentIDs.retrieve().equals(id))
                 return true;
-            }
+            
             documentIDs.findNext();
         }
         if(documentIDs.retrieve().equals(id))
@@ -32,11 +31,11 @@ public class Word{
     }
     
     public void displayWordIds(){
-        System.out.println("\n-----------------------------------------------");
         System.out.println("\nword: "+word);
-        System.out.print("[");
+        System.out.print("document IDs: ");
+        System.out.print("[ ");
         documentIDs.display();
-        System.out.print("]");
+        System.out.print("]\n");
            
        
     }
